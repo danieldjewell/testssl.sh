@@ -19065,8 +19065,12 @@ parse_cmd_line() {
                     fi
                     ;;
                --openssl|--openssl=*)
-                    OPENSSL="$(parse_opt_equal_sign "$1" "$2")"
-                    [[ $? -eq 0 ]] && shift
+                    if [ "$1" == "--openssl" ]; then
+                         OPENSSL="$(which openssl)"
+                    else
+                         OPENSSL="$(parse_opt_equal_sign "$1" "$2")"
+                         [[ $? -eq 0 ]] && shift
+                    fi
                     ;;
                --openssl-timeout|--openssl-timeout=*)
                     OPENSSL_TIMEOUT="$(parse_opt_equal_sign "$1" "$2")"
